@@ -35,7 +35,7 @@
 
 \begin{document}
 \lstdefinelanguage{EScript}{
-	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach},
+	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach,as,thisFn,break,continue},
 	sensitive=true,
 	morecomment=[l]{//},
 	morecomment=[s]{/*}{*/},
@@ -88,14 +88,19 @@ EScript $\ldots$ \\[1em]
 	\begin{block}{var}
 		\begin{lstlisting}
 			/*
-			   Calculate the horizontal position:
-			   - 500 is the panel's width
-			   - 80 is the button's width
-			*/
+			   Declaring a variable is done using the keyword
+			   "var", an identifier, an equation sign, and an
+			   expression on the right side. The type of the
+			   variable is deduced from the expression on the
+			   right side.
+			 */
 			var xPos = 500 - 80 / 2;
 
-			// Tooltip message of the button
+			// The variable "message" will be of type String
 			var message = "Please click the button";
+
+			// Dynamically change the type to Number
+			message = 5;
 		\end{lstlisting}
 	\end{block}
 \end{frame}
@@ -105,7 +110,7 @@ EScript $\ldots$ \\[1em]
 		\begin{lstlisting}
 			var square = fn(num) {
 			    return num * num;
-			}
+			};
 			var a = square(5);
 			var b = square(4.2);
 		\end{lstlisting}
@@ -136,14 +141,18 @@ EScript $\ldots$ \\[1em]
 			var car = new ExtObject();
 			car.color := "red";
 			car.speed := 190;
-			car.speed = 185;
 			car.outputDesc := fn() {
 			    out("This is a ", this.color, " car ");
 			    out("with top speed ", this.speed, ".\n");
 			};
+
+			...
+
+			car.speed = 185;
 			car.outputDesc();
 		\end{lstlisting}
 	\end{block}
+	Output: This is a red car with top speed 185.
 \end{frame}
 
 \begin{frame}[fragile]{Komplexere Typen (3)}
@@ -171,7 +180,7 @@ EScript $\ldots$ \\[1em]
 \begin{frame}[fragile]{Abfragen}
 	\begin{block}{if}
 		\begin{lstlisting}
-			var result = false;
+			var result = /* some function */;
 			if(result) {
 			    out("Success");
 			} else {
@@ -179,7 +188,7 @@ EScript $\ldots$ \\[1em]
 			}
 		\end{lstlisting}
 		\begin{lstlisting}
-			var num = 17;
+			var num = /* some number */;
 			if(num < 0) {
 			    out("Too small");
 			} else if(num >= 0 && num <= 100) {
