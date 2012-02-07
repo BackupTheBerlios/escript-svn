@@ -35,14 +35,21 @@
 
 \begin{document}
 \lstdefinelanguage{EScript}{
-	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach,as,thisFn,break,continue},
+	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach,as,thisFn,break,continue,return},
+	morekeywords=[2]{out,ExtObject,Type,Number},
 	sensitive=true,
 	morecomment=[l]{//},
 	morecomment=[s]{/*}{*/},
 	morestring=[b]{"},
 	morestring=[d]{’}
 }
-\lstset{language=EScript,showstringspaces=false,tabsize=4,basicstyle=\ttfamily}
+\lstset{
+	language=EScript,
+	showstringspaces=false,
+	tabsize=4,
+	basicstyle=\ttfamily,
+	keywordstyle=[2]\color{blue}
+}
 \maketitle
 
 \begin{frame}{Übersicht}
@@ -242,7 +249,7 @@ EScript $\ldots$ \\[1em]
 \section{Beispiele}
 
 \begin{frame}[fragile]{Fakultät}
-	$n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n\qquad0! = 1$
+	Fakultät: $\qquad n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n \qquad 0! = 1$
 	\begin{block}{Implementierung}
 		\begin{lstlisting}
 			var factorialRecursive = fn(Number n) {
@@ -273,8 +280,8 @@ EScript $\ldots$ \\[1em]
 			    player.y += dy;
 			};
 			var printPos = fn(player) {
-				out("Player position: (", player.x);
-				out(", ", player.y, ")\n");
+			    out("Player position: (", player.x);
+			    out(", ", player.y, ")\n");
 			};
 
 			var playerA = new Player();
