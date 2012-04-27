@@ -1,0 +1,296 @@
+\documentclass[ucs,9pt]{beamer}
+
+% Set input encoding to UTF-8.
+\usepackage[utf8x]{inputenc}
+
+% Set language.
+\usepackage[ngerman]{babel}
+
+% \usepackage{multimedia}
+% \usepackage{tikz}
+% \usetikzlibrary{3d,calc,matrix,positioning,trees}
+
+% \usepackage{amsmath}
+% \usepackage{units}
+\usepackage{microtype}
+% \usepackage{stmaryrd}
+
+\usepackage{listings}
+
+\title{EScript}
+\subtitle{Kurzvorstellung einer Skriptsprache}
+\author{Benjamin~Eikel}
+\date{13. Februar 2012}
+
+\newcommand{\HNIphone}{+49 5251 60-6452}
+\newcommand{\HNIfax}{+49 5251 60-6482}
+\newcommand{\HNIemail}{eikel@upb.de}
+\newcommand{\HNIweb}{http://wwwhni.upb.de/alg/}
+\newcommand{\HNIaffiliation}{Benjamin Eikel ist Stipendiat der \href{http://pace.uni-paderborn.de/de/studienprogramme/igs.html}{\includegraphics[width=.9\linewidth]{logo_igs}}}
+
+% Activate the Heinz Nixdorf Institute theme.
+\usepackage{HNI/beamerthemeHNI}
+
+\setbeamertemplate{bibliography item}[triangle] 
+
+\begin{document}
+\lstdefinelanguage{EScript}{
+	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach,as,thisFn,break,continue,return},
+	morekeywords=[2]{out,ExtObject,Type,Number},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]{"},
+	morestring=[d]{’}
+}
+\lstset{
+	language=EScript,
+	showstringspaces=false,
+	tabsize=4,
+	basicstyle=\ttfamily,
+	keywordstyle=[2]\color{blue}
+}
+\maketitle
+
+\begin{frame}{Übersicht}
+\tableofcontents
+\end{frame}
+
+\section{Einführung}
+\begin{frame}{Was ist EScript?}
+EScript $\ldots$ \\[1em]
+\begin{itemize}
+	\addtolength{\itemsep}{\baselineskip}
+	\item ist eine interpretierte, objektorientierte Skriptsprache.
+	\item hat eine ähnliche Syntax wie C.
+	\item wurde entwickelt, um C++-Objekte einfach in Skripten verwenden zu können.
+	\item ist unter einer freien Softwarelizenz veröffentlicht.
+	\item ist erhältlich unter \url{http://escript.berlios.de/}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Erste Beispiele}
+\begin{itemize}
+	\addtolength{\itemsep}{\baselineskip}
+	\item EScript-Dateien sollten die Endung \texttt{.escript} haben.
+	\item Ein einfaches Skript:
+			\begin{lstlisting}
+				out("Hallo Welt!\n");
+			\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\section{Datentypen}
+\begin{frame}[fragile]{Einfache Typen}
+\begin{description}
+	\addtolength{\itemsep}{\baselineskip}
+	\item[Number] Beispiele: \lstinline!1!, \lstinline!27.4!, \lstinline!0x1a!, \lstinline!25 / 5!, \lstinline!3 + 4!
+	\item[String] Beispiele: \lstinline!"ein"!, \lstinline!'beispiel'!, \lstinline!"hallo" + "welt"!
+	\item[Bool] \lstinline!true! oder \lstinline!false!
+	\item[Void] \lstinline!void!
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile]{Variablen, Kommentare}
+	\begin{block}{var}
+		\begin{lstlisting}
+			/*
+			   Declaring a variable is done using the keyword
+			   "var", an identifier, an equation sign, and an
+			   expression on the right side. The type of the
+			   variable is deduced from the expression on the
+			   right side.
+			 */
+			var xPos = 500 - 80 / 2;
+
+			// The variable "message" will be of type String
+			var message = "Please click the button";
+
+			// Dynamically change the type to Number
+			message = 5;
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Funktionen}
+	\begin{block}{fn}
+		\begin{lstlisting}
+			var square = fn(num) {
+			    return num * num;
+			};
+			var a = square(5);
+			var b = square(4.2);
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Komplexere Typen (1)}
+	\begin{block}{Array}
+		\begin{lstlisting}
+			var numbers = [3, 23, 7, 3, 100, 1, 35];
+			var colors = ["red", "green", "blue"];
+		\end{lstlisting}
+	\end{block}
+	\begin{block}{Map}
+		\begin{lstlisting}
+			var fruits = {
+			    "lemon" : "yellow",
+			    "cherry" : "red"
+			};
+			fruits["apple"] = "green";
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Komplexere Typen (2)}
+	\begin{block}{ExtObject}
+		\begin{lstlisting}
+			var car = new ExtObject();
+			car.color := "red";
+			car.speed := 190;
+			car.outputDesc := fn() {
+			    out("This is a ", this.color, " car ");
+			    out("with top speed ", this.speed, ".\n");
+			};
+
+			...
+
+			car.speed = 185;
+			car.outputDesc();
+		\end{lstlisting}
+	\end{block}
+	Output: This is a red car with top speed 185.
+\end{frame}
+
+\begin{frame}[fragile]{Komplexere Typen (3)}
+	\begin{block}{Type}
+		\begin{lstlisting}
+			var Shape = new Type();
+			Shape.color := "white";
+
+			// Neuer Typ, der von Shape erbt
+			var Polygon = new Type(Shape); 
+			Polygon.numVertices := 3;
+
+			// Neuer Typ, der von Shape erbt
+			var Circle = new Type(Shape); 
+			Circle.radius := 0;
+
+			var circle = new Circle();
+			circle.color = "red";
+			circle.radius = 5;
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+ 
+\section{Kontrollstrukturen}
+\begin{frame}[fragile]{Abfragen}
+	\begin{block}{if}
+		\begin{lstlisting}
+			var result = /* some function */;
+			if(result) {
+			    out("Success");
+			} else {
+			    out("Failure");
+			}
+		\end{lstlisting}
+		\begin{lstlisting}
+			var num = /* some number */;
+			if(num < 0) {
+			    out("Too small");
+			} else if(num >= 0 && num <= 100) {
+			    out("Range okay");
+			} else {
+			    out("Too large");
+			}
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Schleifen (1)}
+	\begin{block}{while}
+		\begin{lstlisting}
+			var tasks = [/* some tasks */];
+			while(!tasks.empty()) {
+			    var firstTask = tasks.front();
+			    tasks.popFront();
+			    // do something with first task
+			}
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Schleifen (2)}
+	\begin{block}{for}
+		\begin{lstlisting}
+			var sum = 0;
+			for(var i = 0; i < 100; ++i) {
+			    sum += i;
+			}
+			out("Sum of numbers: ", sum, "\n");
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Schleifen (3)}
+	\begin{block}{foreach}
+		\begin{lstlisting}
+			var chars = ["a", "c", "k", "b", "d", "x", "j"];
+			foreach(chars as var c) {
+			    if(c == "x") {
+			        out("Character \"x\" found.");
+			        break;
+			    }
+			}
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\section{Beispiele}
+
+\begin{frame}[fragile]{Fakultät}
+	Fakultät: $\qquad n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n \qquad 0! = 1$
+	\begin{block}{Implementierung}
+		\begin{lstlisting}
+			var factorialRecursive = fn(Number n) {
+			    if(n == 0) {
+			        return 1;
+			    }
+			    return thisFn(n - 1) * n;
+			};
+			var factorialIterative = fn(Number n) {
+			    var product = 1;
+			    for(var i = 2; i <= n; ++i) {
+			        product *= i;
+			    }
+			    return product;
+			};
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Spieler}
+	\begin{block}{Implementierung}
+		\begin{lstlisting}
+			var Player = new Type();
+			Player.x := 0;
+			Player.y := 0;
+			var movePlayer = fn(player, Number dx, Number dy) {
+			    player.x += dx;
+			    player.y += dy;
+			};
+			var printPos = fn(player) {
+			    out("Player position: (", player.x);
+			    out(", ", player.y, ")\n");
+			};
+
+			var playerA = new Player();
+			movePlayer(playerA, 5, 7);
+			printPos(playerA);
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\HNIlastframe
+
+\end{document}
