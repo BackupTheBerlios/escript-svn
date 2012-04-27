@@ -4,34 +4,24 @@
 \usepackage[utf8x]{inputenc}
 
 % Set language.
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 
-% \usepackage{multimedia}
-% \usepackage{tikz}
-% \usetikzlibrary{3d,calc,matrix,positioning,trees}
-
-% \usepackage{amsmath}
-% \usepackage{units}
 \usepackage{microtype}
-% \usepackage{stmaryrd}
-
 \usepackage{listings}
 
 \title{EScript}
-\subtitle{Kurzvorstellung einer Skriptsprache}
+\subtitle{Short Presentation of a Scripting Language}
 \author{Benjamin~Eikel}
-\date{13. Februar 2012}
+\date{May 11, 2012}
 
 \newcommand{\HNIphone}{+49 5251 60-6452}
 \newcommand{\HNIfax}{+49 5251 60-6482}
 \newcommand{\HNIemail}{eikel@upb.de}
-\newcommand{\HNIweb}{http://wwwhni.upb.de/alg/}
-\newcommand{\HNIaffiliation}{Benjamin Eikel ist Stipendiat der \href{http://pace.uni-paderborn.de/de/studienprogramme/igs.html}{\includegraphics[width=.9\linewidth]{logo_igs}}}
+\newcommand{\HNIweb}{http://wwwhni.upb.de/en/alg/}
+\newcommand{\HNIaffiliation}{Benjamin Eikel holds a scholarship of the \href{http://pace.uni-paderborn.de/en/phd-programs/igs}{\includegraphics[width=.9\linewidth]{logo_igs}}}
 
 % Activate the Heinz Nixdorf Institute theme.
 \usepackage{HNI/beamerthemeHNI}
-
-\setbeamertemplate{bibliography item}[triangle] 
 
 \begin{document}
 \lstdefinelanguage{EScript}{
@@ -52,46 +42,46 @@
 }
 \maketitle
 
-\begin{frame}{Übersicht}
+\begin{frame}{Overview}
 \tableofcontents
 \end{frame}
 
-\section{Einführung}
-\begin{frame}{Was ist EScript?}
+\section{Introduction}
+\begin{frame}{What is EScript?}
 EScript $\ldots$ \\[1em]
 \begin{itemize}
 	\addtolength{\itemsep}{\baselineskip}
-	\item ist eine interpretierte, objektorientierte Skriptsprache.
-	\item hat eine ähnliche Syntax wie C.
-	\item wurde entwickelt, um C++-Objekte einfach in Skripten verwenden zu können.
-	\item ist unter einer freien Softwarelizenz veröffentlicht.
-	\item ist erhältlich unter \url{http://escript.berlios.de/}.
+	\item is a interpreted, object-oriented scripting language.
+	\item has a similar syntax to C.
+	\item was developed to use C++ objects from scripts easily.
+	\item is released under a free software license.
+	\item is available from \url{http://escript.berlios.de/}.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Erste Beispiele}
+\begin{frame}[fragile]{First Example}
 \begin{itemize}
 	\addtolength{\itemsep}{\baselineskip}
-	\item EScript-Dateien sollten die Endung \texttt{.escript} haben.
-	\item Ein einfaches Skript:
+	\item EScript files should have the extension \texttt{.escript}.
+	\item A simple script:
 			\begin{lstlisting}
-				out("Hallo Welt!\n");
+				out("Hello, world!\n");
 			\end{lstlisting}
 \end{itemize}
 \end{frame}
 
-\section{Datentypen}
-\begin{frame}[fragile]{Einfache Typen}
+\section{Data Types}
+\begin{frame}[fragile]{Simple Types}
 \begin{description}
 	\addtolength{\itemsep}{\baselineskip}
-	\item[Number] Beispiele: \lstinline!1!, \lstinline!27.4!, \lstinline!0x1a!, \lstinline!25 / 5!, \lstinline!3 + 4!
-	\item[String] Beispiele: \lstinline!"ein"!, \lstinline!'beispiel'!, \lstinline!"hallo" + "welt"!
-	\item[Bool] \lstinline!true! oder \lstinline!false!
+	\item[Number] Examples: \lstinline!1!, \lstinline!27.4!, \lstinline!0x1a!, \lstinline!25 / 5!, \lstinline!3 + 4!
+	\item[String] Examples: \lstinline!"an"!, \lstinline!'example'!, \lstinline!"hello" + ' ' + "world"!
+	\item[Bool] \lstinline!true! or \lstinline!false!
 	\item[Void] \lstinline!void!
 \end{description}
 \end{frame}
 
-\begin{frame}[fragile]{Variablen, Kommentare}
+\begin{frame}[fragile]{Varibales, Comments}
 	\begin{block}{var}
 		\begin{lstlisting}
 			/*
@@ -112,7 +102,7 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Funktionen}
+\begin{frame}[fragile]{Functions}
 	\begin{block}{fn}
 		\begin{lstlisting}
 			var square = fn(num) {
@@ -124,7 +114,7 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Komplexere Typen (1)}
+\begin{frame}[fragile]{Advanced Types (1)}
 	\begin{block}{Array}
 		\begin{lstlisting}
 			var numbers = [3, 23, 7, 3, 100, 1, 35];
@@ -142,7 +132,7 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Komplexere Typen (2)}
+\begin{frame}[fragile]{Advanced Types (2)}
 	\begin{block}{ExtObject}
 		\begin{lstlisting}
 			var car = new ExtObject();
@@ -162,17 +152,17 @@ EScript $\ldots$ \\[1em]
 	Output: This is a red car with top speed 185.
 \end{frame}
 
-\begin{frame}[fragile]{Komplexere Typen (3)}
+\begin{frame}[fragile]{Advanced Types (3)}
 	\begin{block}{Type}
 		\begin{lstlisting}
 			var Shape = new Type();
 			Shape.color := "white";
 
-			// Neuer Typ, der von Shape erbt
+			// New type that is derived from Shape
 			var Polygon = new Type(Shape); 
 			Polygon.numVertices := 3;
 
-			// Neuer Typ, der von Shape erbt
+			// New type that is derived from Shape
 			var Circle = new Type(Shape); 
 			Circle.radius := 0;
 
@@ -183,8 +173,8 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
  
-\section{Kontrollstrukturen}
-\begin{frame}[fragile]{Abfragen}
+\section{Control Structures}
+\begin{frame}[fragile]{Conditionals (1)}
 	\begin{block}{if}
 		\begin{lstlisting}
 			var result = /* some function */;
@@ -207,7 +197,16 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Schleifen (1)}
+\begin{frame}[fragile]{Conditionals (2)}
+	\begin{block}{? (conditional operator)}
+		\begin{lstlisting}
+			var num = /* some number */;
+			var positive = (num > 0) ? true : false;
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Loops (1)}
 	\begin{block}{while}
 		\begin{lstlisting}
 			var tasks = [/* some tasks */];
@@ -220,7 +219,7 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Schleifen (2)}
+\begin{frame}[fragile]{Loops (2)}
 	\begin{block}{for}
 		\begin{lstlisting}
 			var sum = 0;
@@ -232,7 +231,7 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Schleifen (3)}
+\begin{frame}[fragile]{Loops (3)}
 	\begin{block}{foreach}
 		\begin{lstlisting}
 			var chars = ["a", "c", "k", "b", "d", "x", "j"];
@@ -246,11 +245,10 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\section{Beispiele}
-
-\begin{frame}[fragile]{Fakultät}
-	Fakultät: $\qquad n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n \qquad 0! = 1$
-	\begin{block}{Implementierung}
+\section{Examples}
+\begin{frame}[fragile]{Factorial}
+	Factorial: $\qquad n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n \qquad 0! = 1$
+	\begin{block}{Implementation}
 		\begin{lstlisting}
 			var factorialRecursive = fn(Number n) {
 			    if(n == 0) {
@@ -269,8 +267,8 @@ EScript $\ldots$ \\[1em]
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Spieler}
-	\begin{block}{Implementierung}
+\begin{frame}[fragile]{Player}
+	\begin{block}{Implementation}
 		\begin{lstlisting}
 			var Player = new Type();
 			Player.x := 0;
