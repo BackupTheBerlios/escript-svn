@@ -32,7 +32,7 @@
 \begin{document}
 \lstdefinelanguage{EScript}{
 	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach,as,thisFn,break,continue,return},
-	morekeywords=[2]{out,ExtObject,Type,Number},
+	morekeywords=[2]{out,outln,ExtObject,Type,Number},
 	sensitive=true,
 	morecomment=[l]{//},
 	morecomment=[s]{/*}{*/},
@@ -272,60 +272,30 @@
 \end{frame}
 
 \section{Other Features}
-\begin{frame}[fragile]{Delegation}
+\begin{frame}{Delegation}
 	Call a function on another object.
 	\begin{block}{Example}
 		\lstinputlisting{Delegation.escript}
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Properties}
+\begin{frame}{Properties}
 	\begin{block}{Example}
 		\lstinputlisting{Properties.escript}
 	\end{block}
 \end{frame}
 
 \section{Examples}
-\begin{frame}[fragile]{Factorial}
+\begin{frame}{Factorial}
 	Factorial: $\qquad n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n \qquad 0! = 1$
-	\begin{block}{Implementation}
-		\begin{lstlisting}
-			var factorialRecursive = fn(Number n) {
-			    if(n == 0) {
-			        return 1;
-			    }
-			    return thisFn(n - 1) * n;
-			};
-			var factorialIterative = fn(Number n) {
-			    var product = 1;
-			    for(var i = 2; i <= n; ++i) {
-			        product *= i;
-			    }
-			    return product;
-			};
-		\end{lstlisting}
+	\begin{block}{Example}
+		\lstinputlisting{ExampleFactorial.escript}
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Player}
-	\begin{block}{Implementation}
-		\begin{lstlisting}
-			var Player = new Type();
-			Player.x := 0;
-			Player.y := 0;
-			var movePlayer = fn(player, Number dx, Number dy) {
-			    player.x += dx;
-			    player.y += dy;
-			};
-			var printPos = fn(player) {
-			    out("Player position: (", player.x);
-			    out(", ", player.y, ")\n");
-			};
-
-			var playerA = new Player();
-			movePlayer(playerA, 5, 7);
-			printPos(playerA);
-		\end{lstlisting}
+\begin{frame}{Player}
+	\begin{block}{Example}
+		\lstinputlisting{ExamplePlayer.escript}
 	\end{block}
 \end{frame}
 
