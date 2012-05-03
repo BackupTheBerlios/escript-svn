@@ -23,6 +23,12 @@
 % Activate the Heinz Nixdorf Institute theme.
 \usepackage{HNI/beamerthemeHNI}
 
+\AtBeginSection[] {
+\begin{frame}{Overview}
+	\tableofcontents[currentsection]
+\end{frame}
+}
+
 \begin{document}
 \lstdefinelanguage{EScript}{
 	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach,as,thisFn,break,continue,return},
@@ -51,7 +57,8 @@
 EScript $\ldots$ \\[1em]
 \begin{itemize}
 	\addtolength{\itemsep}{\baselineskip}
-	\item is a interpreted, object-oriented scripting language.
+	\item is an object-oriented scripting language.
+	\item is internally compiled and executed by a virtual machine.
 	\item has a similar syntax to C.
 	\item was developed to use C++ objects from scripts easily.
 	\item is released under a free software license.
@@ -63,6 +70,7 @@ EScript $\ldots$ \\[1em]
 \begin{itemize}
 	\addtolength{\itemsep}{\baselineskip}
 	\item EScript files should have the extension \texttt{.escript}.
+	\item The EScript parser analyzes the script file line by line.
 	\item A simple script:
 			\begin{lstlisting}
 				out("Hello, world!\n");
@@ -72,16 +80,21 @@ EScript $\ldots$ \\[1em]
 
 \section{Data Types}
 \begin{frame}[fragile]{Simple Types}
-\begin{description}
-	\addtolength{\itemsep}{\baselineskip}
-	\item[Number] Examples: \lstinline!1!, \lstinline!27.4!, \lstinline!0x1a!, \lstinline!25 / 5!, \lstinline!3 + 4!
-	\item[String] Examples: \lstinline!"an"!, \lstinline!'example'!, \lstinline!"hello" + ' ' + "world"!
-	\item[Bool] \lstinline!true! or \lstinline!false!
-	\item[Void] \lstinline!void!
-\end{description}
+	\begin{block}{Number}
+		\hfill \lstinline!1! \hfill \lstinline!27.4! \hfill \lstinline!0x1a! \hfill \lstinline!25 / 5! \hfill \lstinline!3 + 4! \hfill{}
+	\end{block}
+	\begin{block}{String}
+		\hfill \lstinline!"an"! \hfill \lstinline!'example'! \hfill \lstinline!"hello" + ', ' + "world"! \hfill{}
+	\end{block}
+	\begin{block}{Bool}
+		\hfill \lstinline!true! \hfill \lstinline!false! \hfill{}
+	\end{block}
+	\begin{block}{Void}
+		\hfill \lstinline!void! \hfill{}
+	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Varibales, Comments}
+\begin{frame}[fragile]{Variables, Comments}
 	\begin{block}{var}
 		\begin{lstlisting}
 			/*
@@ -204,6 +217,9 @@ EScript $\ldots$ \\[1em]
 			var positive = (num > 0) ? true : false;
 		\end{lstlisting}
 	\end{block}
+	\pause
+	\vfill
+	\emph{Note:} There is no \lstinline!switch! in EScript.
 \end{frame}
 
 \begin{frame}[fragile]{Loops (1)}
@@ -242,6 +258,20 @@ EScript $\ldots$ \\[1em]
 			    }
 			}
 		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\section{Other Features}
+\begin{frame}[fragile]{Delegation}
+	Call a function on another object.
+	\begin{block}{Example}
+		\lstinputlisting{Delegation.escript}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Properties}
+	\begin{block}{Example}
+		\lstinputlisting{Properties.escript}
 	\end{block}
 \end{frame}
 
