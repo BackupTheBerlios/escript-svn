@@ -53,17 +53,27 @@
 \end{frame}
 
 \section{Introduction}
-\begin{frame}{What is EScript?}
-EScript $\ldots$ \\[1em]
+\begin{frame}[t]{What is EScript?}
+\includegraphics[width=1cm]{EScript_Logo} EScript $\ldots$ \\[1em]
+\only<1>{
 \begin{itemize}
 	\addtolength{\itemsep}{\baselineskip}
 	\item is an object-oriented scripting language.
-	\item is internally compiled and executed by a virtual machine.
+	\item is compiled and executed by a virtual machine.
 	\item has a similar syntax to C.
 	\item was developed to use C++ objects from scripts easily.
+\end{itemize}
+}
+\only<2>{
+\begin{itemize}
+	\addtolength{\itemsep}{\baselineskip}
 	\item is released under a free software license.
 	\item is available from \url{http://escript.berlios.de/}.
+	\item can be built using CMake.
+	\item has a command-line interpreter.
+	\item can be used internally by other C++ projects (e.g. PADrend).
 \end{itemize}
+}
 \end{frame}
 
 \begin{frame}[fragile]{First Example}
