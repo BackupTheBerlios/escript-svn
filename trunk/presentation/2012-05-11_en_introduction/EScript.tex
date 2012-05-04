@@ -104,6 +104,30 @@
 	\end{block}
 \end{frame}
 
+\begin{frame}[fragile]{Type Conversion}
+	\begin{block}{No conversion to false}
+		\begin{lstlisting}
+			outln(false || false); // Output: false
+			outln(false || 0); // Output: true
+			outln(false || ""); // Output: true
+		\end{lstlisting}
+	\end{block}
+	\pause
+	\begin{block}{Conversion of String to Number}
+		\begin{lstlisting}
+			outln((60 + "4").sqrt()); // Output: 8
+			outln((10 * "10").log(10)); // Output: 2
+		\end{lstlisting}
+	\end{block}
+	\pause
+	\begin{block}{Conversion of Number to String}
+		\begin{lstlisting}
+			outln("4" + 60); // Output: 460
+			outln("12" + 3); // Output: 123
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
 \begin{frame}[fragile]{Variables, Comments}
 	\begin{block}{var}
 		\begin{lstlisting}
@@ -261,14 +285,15 @@
 	\begin{block}{foreach}
 		\begin{lstlisting}
 			var chars = ["a", "c", "k", "b", "d", "x", "j"];
-			foreach(chars as var c) {
+			foreach(chars as var i, var c) {
 			    if(c == "x") {
-			        out("Character \"x\" found.");
+			        out("Character \"x\" found at index " + i);
 			        break;
 			    }
 			}
 		\end{lstlisting}
 	\end{block}
+	Output: Character "x" found at index 5
 \end{frame}
 
 \section{Other Features}
@@ -297,6 +322,10 @@
 	\begin{block}{Example}
 		\lstinputlisting{ExamplePlayer.escript}
 	\end{block}
+\end{frame}
+
+\begin{frame}{Further Documentation}
+	You can find additional documentation in \texttt{EScript/docs/Introduction.html}.
 \end{frame}
 
 \HNIlastframe
