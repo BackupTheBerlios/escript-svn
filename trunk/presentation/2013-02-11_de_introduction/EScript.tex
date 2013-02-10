@@ -1,0 +1,333 @@
+\documentclass[ucs,9pt]{beamer}
+
+% Set input encoding to UTF-8.
+\usepackage[utf8x]{inputenc}
+
+% Set language.
+\usepackage[ngerman]{babel}
+
+\usepackage{microtype}
+\usepackage{listings}
+
+\title{EScript}
+\subtitle{Kurzvorstellung einer Skriptsprache}
+\author{Benjamin~Eikel}
+\date{11. Februar 2013}
+
+\newcommand{\HNIphone}{+49 5251 60-6452}
+\newcommand{\HNIfax}{+49 5251 60-6482}
+\newcommand{\HNIemail}{eikel@upb.de}
+\newcommand{\HNIweb}{http://wwwhni.upb.de/en/alg/}
+\newcommand{\HNIaffiliation}{Benjamin Eikel ist Stipendiat der \href{http://pace.uni-paderborn.de/de/studienprogramme/igs.html}{\includegraphics[width=.9\linewidth]{logo_igs}}}
+
+% Activate the Heinz Nixdorf Institute theme.
+\usepackage{HNI/beamerthemeHNI}
+
+\AtBeginSection[] {
+\begin{frame}{Übersicht}
+	\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{document}
+\lstdefinelanguage{EScript}{
+	morekeywords={var,new,fn,this,true,false,void,if,else,while,for,foreach,as,thisFn,break,continue,return},
+	morekeywords=[2]{out,outln,ExtObject,Type,Number},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]{"},
+	morestring=[d]{’}
+}
+\lstset{
+	language=EScript,
+	showstringspaces=false,
+	tabsize=4,
+	basicstyle=\ttfamily,
+	keywordstyle=[2]\color{blue}
+}
+\maketitle
+
+\begin{frame}{Übersicht}
+\tableofcontents
+\end{frame}
+
+\section{Einführung}
+\begin{frame}[t]{Was ist EScript?}
+\includegraphics[width=1cm]{EScript_Logo} EScript $\ldots$ \\[1em]
+\only<1>{
+\begin{itemize}
+	\addtolength{\itemsep}{\baselineskip}
+	\item ist eine objektorientierte Skriptsprache.
+	\item wird übersetzt und zur Laufzeit durch eine virtuelle Maschine ausgeführt.
+	\item hat eine ähnliche Syntax wie C.
+	\item wurde entwickelt, um C++-Objekte einfach in Skripten verwenden zu können.
+\end{itemize}
+}
+\only<2>{
+\begin{itemize}
+	\addtolength{\itemsep}{\baselineskip}
+	\item ist unter einer freien Softwarelizenz veröffentlicht.
+	\item ist erhältlich unter \url{http://escript.berlios.de/}.
+	\item kann mit CMake gebaut werden.
+	\item hat einen Kommandozeileninterpretierer.
+	\item kann intern von anderen C++-Projekten benutzt werden (z.\,B. PADrend).
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}[fragile]{Erstes Beispiel}
+\begin{itemize}
+	\addtolength{\itemsep}{\baselineskip}
+	\item EScript-Dateien sollten die Endung \texttt{.escript} haben.
+	\item Der EScript-Parser analysiert das Skript Zeile für Zeile.
+	\item Ein einfaches Skript:
+			\begin{lstlisting}
+				out("Hallo Welt!\n");
+			\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\section{Datentypen}
+\begin{frame}[fragile]{Einfache Typen}
+	\begin{block}{Number}
+		\hfill \lstinline!1! \hfill \lstinline!27.4! \hfill \lstinline!0x1a! \hfill \lstinline!25 / 5! \hfill \lstinline!3 + 4! \hfill{}
+	\end{block}
+	\begin{block}{String}
+		\hfill \lstinline!"ein"! \hfill \lstinline!'beispiel'! \hfill \lstinline!"hallo" + "welt"! \hfill{}
+	\end{block}
+	\begin{block}{Bool}
+		\hfill \lstinline!true! \hfill \lstinline!false! \hfill{}
+	\end{block}
+	\begin{block}{Void}
+		\hfill \lstinline!void! \hfill{}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Typkonvertierung}
+	\begin{block}{Keine Konvertierung zu false}
+		\begin{lstlisting}
+			outln(false || false); // Ausgabe: false
+			outln(false || 0); // Ausgabe: true
+			outln(false || ""); // Ausgabe: true
+		\end{lstlisting}
+	\end{block}
+	\pause
+	\begin{block}{Konvertierung von String nach Number}
+		\begin{lstlisting}
+			outln((60 + "4").sqrt()); // Ausgabe: 8
+			outln((10 * "10").log(10)); // Ausgabe: 2
+		\end{lstlisting}
+	\end{block}
+	\pause
+	\begin{block}{Konvertierung von Number nach String}
+		\begin{lstlisting}
+			outln("4" + 60); // Ausgabe: 460
+			outln("12" + 3); // Ausgabe: 123
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Variablen, Kommentare}
+	\begin{block}{var}
+		\begin{lstlisting}
+			/*
+			   Declaring a variable is done using the keyword
+			   "var", an identifier, an equation sign, and an
+			   expression on the right side. The type of the
+			   variable is deduced from the expression on the
+			   right side.
+			 */
+			var xPos = 500 - 80 / 2;
+
+			// The variable "message" will be of type String
+			var message = "Please click the button";
+
+			// Dynamically change the type to Number
+			message = 5;
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Funktionen}
+	\begin{block}{fn}
+		\begin{lstlisting}
+			var square = fn(num) {
+			    return num * num;
+			};
+			var a = square(5);
+			var b = square(4.2);
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Komplexere Typen (1)}
+	\begin{block}{Array}
+		\begin{lstlisting}
+			var numbers = [3, 23, 7, 3, 100, 1, 35];
+			var colors = ["red", "green", "blue"];
+		\end{lstlisting}
+	\end{block}
+	\begin{block}{Map}
+		\begin{lstlisting}
+			var fruits = {
+			    "lemon" : "yellow",
+			    "cherry" : "red"
+			};
+			fruits["apple"] = "green";
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Komplexere Typen (2)}
+	\begin{block}{ExtObject}
+		\begin{lstlisting}
+			var car = new ExtObject();
+			car.color := "red";
+			car.speed := 190;
+			car.outputDesc := fn() {
+			    out("This is a ", this.color, " car ");
+			    out("with top speed ", this.speed, ".\n");
+			};
+
+			...
+
+			car.speed = 185;
+			car.outputDesc();
+		\end{lstlisting}
+	\end{block}
+	Ausgabe: This is a red car with top speed 185.
+\end{frame}
+
+\begin{frame}[fragile]{Komplexere Typen (3)}
+	\begin{block}{Type}
+		\begin{lstlisting}
+			var Shape = new Type();
+			Shape.color := "white";
+
+			// Neuer Typ, der von Shape erbt
+			var Polygon = new Type(Shape); 
+			Polygon.numVertices := 3;
+
+			// Neuer Typ, der von Shape erbt
+			var Circle = new Type(Shape); 
+			Circle.radius := 0;
+
+			var circle = new Circle();
+			circle.color = "red";
+			circle.radius = 5;
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+ 
+\section{Kontrollstrukturen}
+\begin{frame}[fragile]{Abfragen (1)}
+	\begin{block}{if}
+		\begin{lstlisting}
+			var result = /* some function */;
+			if(result) {
+			    out("Success");
+			} else {
+			    out("Failure");
+			}
+		\end{lstlisting}
+		\begin{lstlisting}
+			var num = /* some number */;
+			if(num < 0) {
+			    out("Too small");
+			} else if(num >= 0 && num <= 100) {
+			    out("Range okay");
+			} else {
+			    out("Too large");
+			}
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Abfragen (2)}
+	\begin{block}{? (conditional operator)}
+		\begin{lstlisting}
+			var num = /* some number */;
+			var positive = (num > 0) ? true : false;
+		\end{lstlisting}
+	\end{block}
+	\pause
+	\vfill
+	\emph{Hinweis:} Es gibt kein \lstinline!switch! in EScript.
+\end{frame}
+
+\begin{frame}[fragile]{Schleifen (1)}
+	\begin{block}{while}
+		\begin{lstlisting}
+			var tasks = [/* some tasks */];
+			while(!tasks.empty()) {
+			    var firstTask = tasks.front();
+			    tasks.popFront();
+			    // do something with first task
+			}
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Schleifen (2)}
+	\begin{block}{for}
+		\begin{lstlisting}
+			var sum = 0;
+			for(var i = 0; i < 100; ++i) {
+			    sum += i;
+			}
+			out("Sum of numbers: ", sum, "\n");
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Schleifen (3)}
+	\begin{block}{foreach}
+		\begin{lstlisting}
+			var chars = ["a", "c", "k", "b", "d", "x", "j"];
+			foreach(chars as var i, var c) {
+			    if(c == "x") {
+			        out("Character \"x\" found at index " + i);
+			        break;
+			    }
+			}
+		\end{lstlisting}
+	\end{block}
+	Ausgabe: Character "x"{} found at index 5
+\end{frame}
+
+\section{Weitere Funktionalität}
+\begin{frame}{Delegation}
+	Aufruf einer Funktion auf einem anderen Objekt.
+	\begin{block}{Beispiel}
+		\lstinputlisting{Delegation.escript}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Attribute}
+	\begin{block}{Beispiel}
+		\lstinputlisting{Properties.escript}
+	\end{block}
+\end{frame}
+
+\section{Beispiele}
+\begin{frame}{Fakultät}
+	Fakultät: $\qquad n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n \qquad 0! = 1$
+	\begin{block}{Beispiel}
+		\lstinputlisting{ExampleFactorial.escript}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Spieler}
+	\begin{block}{Beispiel}
+		\lstinputlisting{ExamplePlayer.escript}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Zusätzliche Dokumentation}
+	Zusätzliche Dokumentation befindet sich in \texttt{EScript/docs/Introduction.html}.
+\end{frame}
+
+\HNIlastframe
+
+\end{document}
