@@ -9,6 +9,8 @@
 \usepackage{microtype}
 \usepackage{listings}
 
+\usepackage{todonotes}
+
 \title{EScript}
 \subtitle{Kurzvorstellung einer Skriptsprache}
 \author{Benjamin~Eikel}
@@ -305,6 +307,7 @@
 \end{frame}
 
 \begin{frame}{Attribute}
+	\todo[inline]{"`Attribut"' ist nicht das korrekte Wort}
 	\begin{block}{Beispiel}
 		\lstinputlisting{Properties.escript}
 	\end{block}
@@ -312,6 +315,8 @@
 
 \section{Beispiele}
 \begin{frame}{Fakultät}
+	\todo[inline]{Rekursion (thisFn) vorher einführen}
+	\todo[inline]{Typüberprüfung für Parameter vorher einführen}
 	Fakultät: $\qquad n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n \qquad 0! = 1$
 	\begin{block}{Beispiel}
 		\lstinputlisting{ExampleFactorial.escript}
@@ -319,6 +324,7 @@
 \end{frame}
 
 \begin{frame}{Spieler}
+	\todo[inline]{::= vorher einführen}
 	\begin{block}{Beispiel}
 		\lstinputlisting{ExamplePlayer.escript}
 	\end{block}
